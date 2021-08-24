@@ -1,7 +1,7 @@
 {
   "openapi": "3.0.0",
   "info": {
-    "title": "RentalX Documentation",
+    "title": "RentX Documentation",
     "description": "This is an Rent API",
     "version": "1.0.0",
     "contact": {
@@ -37,7 +37,14 @@
         },
         "responses": {
           "201": {
-            "description": "Created"
+            "description": "Created",
+            "content": {
+              "application/json":{
+                "schema":{
+                  "$ref": "#/definitions/schemas/category"
+                }
+              }
+            }
           },
           "400": {
             "description": "Category already exists"
@@ -68,6 +75,115 @@
                 }
               }
             }
+          }
+        }
+      }
+    },
+    "/categories/import": {
+      "post": {
+        "tags": ["Category"],
+        "summary": "Upload a new categories",
+        "description": "Create new categories from a upload",
+        "requestBody":{
+          "content":{
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "format": "binary",
+                    "example": "Category name sample, Category description sample"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses":{
+          "201":{
+            "description": "Created"
+          }
+        }
+      }
+    },
+    "/specifications/": {
+      "post":{
+        "tags": ["Specification"],
+        "summary": "Create a Specification",
+        "description": "Create a new specification",
+        "requestBody":{
+          "required":true,
+          "content":{
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "example": "Specification name sample"
+                  },
+                  "description": {
+                    "type": "string",
+                    "example": "Specification description sample"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses":{
+          "201":{
+            "description": "Created"
+          },
+          "500": {
+            "description": "Specification already exists!"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "schemas": {
+      "category": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string",
+            "example": "Category name sample"
+          },
+          "description": {
+            "type": "string",
+            "example":"Category description sample"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "specification": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string",
+            "example": "Specification name sample"
+          },
+          "description": {
+            "type": "string",
+            "example":"Specification description sample"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
           }
         }
       }
