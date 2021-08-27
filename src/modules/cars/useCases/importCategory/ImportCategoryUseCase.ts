@@ -2,6 +2,7 @@ import csvParse from 'csv-parse';
 import fs from 'fs';
 import { inject, injectable } from 'tsyringe';
 
+import { AppError } from '../../../../errors/AppError';
 import { ICategoriesRepository } from '../../repositories/ICategoriesRepository';
 
 interface IImportCategory {
@@ -75,7 +76,7 @@ export class ImportCategoryUseCase {
     });
 
     if (errors.length > 0) {
-      throw new Error(
+      throw new AppError(
         `${errors.join(', ')} have not been registered in the database.`,
       );
     }
