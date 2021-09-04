@@ -23,8 +23,6 @@ Não é necessário um usuário auntenticado no sistema para listar
 
 **RF**
 Deve ser possível cadastrar uma especificação para um carro
-Deve ser possível listar todas as especificações
-Deve ser possível listar todas os carros
 
 
 **RN**
@@ -37,7 +35,6 @@ O usuário responsável pelo cadastro deve ser um usuário administrador.
 
 **RF**
 Deve ser possível cadastrar imagem do carro
-Deve ser possível listar todos os carros
 
 **RNF**
 Utilizar o multer para upload dos arquivos
@@ -55,3 +52,4 @@ Deve ser possível cadastrar um aluguel
 O aluguel deve ter duração mínima de 24 horas
 Não deve ser possível cadastrar um novo aluguel caso já exista um em aberto para o mesmo usuário.
 Não deve ser possível cadastrar um novo aluguel caso já exista um em aberto para o mesmo carro.
+O usuário deve estar logado na aplicação

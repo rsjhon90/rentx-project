@@ -7,13 +7,20 @@
     {
       "type": "node",
       "request": "attach",
-      "name": "Launch Program",
+      "name": "Node local",
       "skipFiles": [
         "<node_internals>/**"
       ],
       "outFiles": [
         "${workspaceFolder}/**/*.js"
       ]
+    },
+    {
+      "type": "node",
+      "request": "attach",
+      "name": "Docker: Attach to Node",
+      "remoteRoot": "/usr/app/",
+      "localRoot": "${workspaceFolder}"
     }
   ]
 }
