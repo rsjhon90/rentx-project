@@ -10,6 +10,9 @@ export class RentalsRepositoryInMemory implements IRentalsRepository {
     car_id,
     expected_return_date,
     user_id,
+    end_date,
+    id,
+    total,
   }: ICreateRentalDTO): Promise<Rental> {
     const rental = Object.assign(new Rental(), {
       car_id,
@@ -18,7 +21,17 @@ export class RentalsRepositoryInMemory implements IRentalsRepository {
       start_date: new Date(),
     });
 
-    this.rentals.push(rental);
+    if (!id) {
+      this.rentals.push(rental);
+    }
+
+    if (id) {
+      const index = this.rentals.findIndex(rental => rental.id === id);
+      this.rentals[index].end_date = end_date;
+      this.rentals[index].total = total;
+
+      return this.rentals[index];
+    }
 
     return rental;
   }
@@ -31,5 +44,17 @@ export class RentalsRepositoryInMemory implements IRentalsRepository {
     return this.rentals.find(
       rental => rental.user_id === user_id && !rental.end_date,
     );
+  }
+
+  async findById(id: string): Promise<Rental> {
+    const rental = this.rentals.find(rental => rental.id === id);
+
+    return rental;
+  }
+
+  async findAllRentalsByUser(user_id: string): Promise<Rental[]> {
+    const rentals = this.rentals.filter(rental => rental.user_id === user_id);
+
+    return rentals;
   }
 }

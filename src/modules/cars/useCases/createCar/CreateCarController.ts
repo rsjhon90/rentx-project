@@ -5,7 +5,6 @@ import { CreateCarUseCase } from './CreateCarUseCase';
 
 export class CreateCarController {
   async handle(request: Request, response: Response): Promise<Response> {
-    // const { id } = request.user;
     const {
       name,
       description,

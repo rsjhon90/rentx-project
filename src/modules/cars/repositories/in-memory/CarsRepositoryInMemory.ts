@@ -28,7 +28,6 @@ export class CarsRepositoryInMemory implements ICarsRepository {
       fine_amount,
       license_plate,
       name,
-      available: true,
     });
 
     if (!id) {
@@ -55,7 +54,7 @@ export class CarsRepositoryInMemory implements ICarsRepository {
     category_id,
     name,
   }: IListCarDTO): Promise<Car[]> {
-    const allCarsAvaiable = this.cars.filter(car => {
+    const allCarsAvailable = this.cars.filter(car => {
       if (car.available) {
         if (brand) {
           return car.brand === brand;
@@ -73,12 +72,17 @@ export class CarsRepositoryInMemory implements ICarsRepository {
       return false;
     });
 
-    return allCarsAvaiable;
+    return allCarsAvailable;
   }
 
   async findById(id: string): Promise<Car> {
     const car = this.cars.find(car => car.id === id);
 
     return car;
+  }
+
+  async updateAvailable(id: string, available: boolean): Promise<void> {
+    const index = this.cars.findIndex(car => car.id === id);
+    this.cars[index].available = available;
   }
 }

@@ -23,19 +23,21 @@ export class CreateCarSpecificationUseCase {
 
   async execute({ car_id, specifications_id }: IRequest): Promise<Car> {
     if (!isUuid(car_id)) {
-      throw new AppError('Car does not Exists');
+      throw new AppError('Car does not Exists.', 404);
     }
 
     const carExists = await this.carsRepository.findById(car_id);
     if (!carExists) {
-      throw new AppError('Car does not Exists');
+      throw new AppError('Car does not Exists.', 404);
     }
 
     const specifications = await this.specificationsRepository.findByIds(
       specifications_id,
     );
 
-    carExists.specifications = specifications;
+    if (specifications) {
+      carExists.specifications = specifications;
+    }
 
     await this.carsRepository.create(carExists);
 
