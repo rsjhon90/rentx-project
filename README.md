@@ -69,10 +69,21 @@ Caso o horário de devolução seja superior ao horário previsto de entrega, de
 Caso haja multa deverá ser somado ao total do aluguel.
 O usuário deve estar logado na aplicação.
 
-# Listagem de aligueis para usuário
+# Listagem de alúgueis para usuário
 
 **RF**
 Deve ser possível realizar a busca de todos os alugueis para o usuário
 
 **RN**
 O usuário deve estar logado na aplicação
+
+# Recuperar senha
+
+**RF**
+Deve ser possível o usuário recuperar a senha informando o e-mail
+O usuário deve receber um e-mail com o passo a passo para a recuperação da senha
+O usuário deve conseguir inserir uma nova senha
+
+**RN** 
+O usuário precisa informar uma nova senha
+O link enviado para a recuperação deve expirar em 3 horas
