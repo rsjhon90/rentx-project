@@ -13,7 +13,7 @@ interface IRequest {
   password: string;
 }
 
-interface IResponse {
+interface ITokenResponse {
   user: {
     name: string;
     email: string;
@@ -35,7 +35,7 @@ export class AuthenticateUserUseCase {
     private dateProvider: IDateProvider,
   ) {}
 
-  async execute({ email, password }: IRequest): Promise<IResponse> {
+  async execute({ email, password }: IRequest): Promise<ITokenResponse> {
     const user = await this.usersRepository.findByEmail(email);
     const {
       secret_token,
@@ -70,7 +70,7 @@ export class AuthenticateUserUseCase {
       expires_date: this.dateProvider.addDays(expires_refresh_token_days),
     });
 
-    const tokenReturn: IResponse = {
+    const tokenReturn: ITokenResponse = {
       token,
       user: {
         name: user.name,

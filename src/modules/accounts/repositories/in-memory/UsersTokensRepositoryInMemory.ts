@@ -11,13 +11,15 @@ export class UsersTokensRepositoryInMemory implements IUsersTokensRepository {
     refresh_token,
     expires_date,
   }: ICreateUserTokenDTO): Promise<UserTokens> {
-    const userTokens = Object.assign(new UserTokens(), {
+    const userToken = Object.assign(new UserTokens(), {
       user_id,
       refresh_token,
       expires_date,
     });
 
-    return userTokens;
+    this.usersTokens.push(userToken);
+
+    return userToken;
   }
 
   async findByUserIdAndRefreshToken(
@@ -37,5 +39,13 @@ export class UsersTokensRepositoryInMemory implements IUsersTokensRepository {
     const index = this.usersTokens.findIndex(uTokens => uTokens.id === id);
 
     this.usersTokens.splice(index, 1);
+  }
+
+  async findByRefreshToken(token: string): Promise<UserTokens> {
+    const userToken = this.usersTokens.find(
+      userTokens => userTokens.refresh_token === token,
+    );
+
+    return userToken;
   }
 }
