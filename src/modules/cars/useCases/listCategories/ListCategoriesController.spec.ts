@@ -15,7 +15,6 @@ describe('Create Category Controller', () => {
 
     const id = uuidV4();
     const passwordAdmin = await hash('admin', 8);
-    const passwordUser = await hash('user', 8);
 
     await connection.query(
       `INSERT INTO users(id, name, email, password, "isAdmin", created_at, driver_license)
@@ -30,13 +29,13 @@ describe('Create Category Controller', () => {
     await connection.close();
   });
 
-  it('should be able to list all categories as an admin user', async () => {
+  it('should be able to list all categories', async () => {
     const responseToken = await request(app).post('/sessions').send({
       email: 'admin@rentx.com.br',
       password: 'admin',
     });
 
-    const { refresh_token } = responseToken.body;
+    const { token } = responseToken.body;
 
     await request(app)
       .post('/categories')
@@ -45,7 +44,7 @@ describe('Create Category Controller', () => {
         description: 'Category Supertest',
       })
       .set({
-        Authorization: `Bearer ${refresh_token}`,
+        Authorization: `Bearer ${token}`,
       });
 
     const response = await request(app).get('/categories');
