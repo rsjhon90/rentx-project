@@ -1,4 +1,7 @@
 node_modules/
-tmp/
+tmp/*
 .log
 .env
+dist/
+!tmp/.gitkeep
+ormconfig.json
