@@ -11,10 +11,14 @@ import createConnection from '@shared/infra/typeorm/index';
 import '@shared/container';
 
 import swaggerFile from '../../../swagger.json';
+import rateLimiter from './middleware/rateLimiter';
 import { router } from './routes';
 
 createConnection();
 const app = express();
+
+app.use(rateLimiter);
+
 app.use(express.json());
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerFile));
