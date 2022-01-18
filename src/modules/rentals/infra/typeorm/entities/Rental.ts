@@ -9,8 +9,11 @@ import {
 } from 'typeorm';
 import { v4 as uuidV4 } from 'uuid';
 
-import { User } from '@modules/accounts/infra/typeorm/entities/User';
-import { Car } from '@modules/cars/infra/typeorm/entities/Car';
+import { User } from '../../../../accounts/infra/typeorm/entities/User';
+import { Car } from '../../../../cars/infra/typeorm/entities/Car';
+
+// import { User } from '@modules/accounts/infra/typeorm/entities/User';
+// import { Car } from '@modules/cars/infra/typeorm/entities/Car';
 
 @Entity('rentals')
 export class Rental {

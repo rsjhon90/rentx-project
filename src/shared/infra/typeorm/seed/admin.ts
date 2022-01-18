@@ -1,10 +1,12 @@
 import { hash } from 'bcrypt';
+import { createConnection } from 'typeorm';
 import { v4 as uuidV4 } from 'uuid';
 
-import crateConnection from '../index';
+// import createConnection from '../index';
 
 async function create() {
-  const connection = await crateConnection('localhost');
+  // const connection = await createConnection('localhost');
+  const connection = await createConnection();
 
   const id = uuidV4();
   const password = await hash('admin', 8);

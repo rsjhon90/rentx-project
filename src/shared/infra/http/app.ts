@@ -17,6 +17,7 @@ import rateLimiter from './middleware/rateLimiter';
 import { router } from './routes';
 
 createConnection();
+
 const app = express();
 
 app.use(rateLimiter);

@@ -1,89 +1,50 @@
-# Cadastro de carro
+<h1 align="center">Aluguel de Carros</h1>
 
-**RF**
-Deve ser possível cadastrar um novo carro
+## Algumas tecnologias
 
-**RN**
-Não deve ser possível cadastrar um carro com uma placa já existente.
-O carro deve ser cadastrado com disponibilidade imediata, por padrão.
-O usuário responsável pelo cadastro deve ser um usuário administrador.
+- [Node.js](https://nodejs.org/en/)
+- [Typescript](https://www.typescriptlang.org/)
+- [Express Framework Web](https://expressjs.com/pt-br/)
+- [Docker engine](https://www.docker.com/)
+- [aws-sdk S3](https://aws.amazon.com/pt/s3/)
+- [aws-sdk SES](https://aws.amazon.com/pt/ses/)
+- [Sentry's Node SDK](https://sentry.io/)
+- [PostgresSQL](https://www.postgresql.org/)
+- [TypeORM](https://typeorm.io/#/)
 
-# Listagem de carros
+## Projeto
 
-**RF**
-Deve ser possível listar todos os carros disponíveis para alugar
-Deve ser possível listagem filtrando pelo nome da categoria
-Deve ser possível listagem filtrando pelo nome da marca
-Deve ser possível listagem filtrando pelo nome do carro
+REST api projetada para aluguel de carros, como consumidor e administrador.
+Algumas possibilidades:
+- Cadastro de usuário
+- Cadastro de carro (como administrador)
+- Listagem de carros
+- Cadastro de especificação do carro (como administrador)
+- Cadastro de imagem do carro (como administrador)
+- Aluguel de carro (consumidor autenticado)
+- Devolução de carro (consumidor autenticado)
+- Recuperação de senha (localmente via ethereal ou AWS SES com as devidas credenciais configuradas via arquivo .env)
 
-**RN**
-Não é necessário um usuário auntenticado no sistema para listar
+Uma documentação simplificada pode ser acessada, através da rota `/api-docs` (trabalho em progresso).
 
-# Cadastro de especificação do carro
+## Requerimentos
 
-**RF**
-Deve ser possível cadastrar uma especificação para um carro
+- NodeJS 14.x
+- Docker engine
+- Docker Compose
+- Configuração do arquivo .env 
+PS: A aplicação pode ser rodada utilizando o .env.example como base, com pequenas alterações. Não é obrigatório configurar credenciais AWS. Mas caso o faça, o valor para as variável `disk` seria "s3" e para `MAIL_PROVIDER`, "ses".
 
+## Execução
 
-**RN**
-Não deve ser possível cadastrar uma especificação para um carro não existente.
-Não deve ser possível cadastrar uma especificação já existente para o mesmo carro.
-O usuário responsável pelo cadastro deve ser um usuário administrador.
+- Rode `yarn` para instalar as dependências
+- Rode `docker-compose up -d` para baixar imagem do postgres e redis e rodar o container
+- Rode `yarn typeorm migration:run` para criar as tabelas no banco de dados.
+- (Opcional) Rode `yarn seed:admim` para criar um registro de usuário com privilégio de administrador.
 
+A autenticação é feita via [JSON Web Token](https://jwt.io/) preenchida no header da requisição.
+Com a ajuda do [Swagger API](https://swagger.io/), no endpoint `/api-docs` é possível testar boa parte das rotas no browser, sem a necessidade de ferramentas como Insomnia ou Postman.
 
-# Cadastro de imagem do carro
+### Sentry para monitorar erros nas rotas
 
-**RF**
-Deve ser possível cadastrar imagem do carro
-
-**RNF**
-Utilizar o multer para upload dos arquivos
-
-**RN**
-O usuário deve poder cadastrar mais de uma imagem para o mesmo carro
-O usuário responsável pelo cadastro deve ser um usuário administrador.
-
-# Aluguel de carro
-
-**RF**
-Deve ser possível cadastrar um aluguel
-
-**RN**
-O aluguel deve ter duração mínima de 24 horas
-Não deve ser possível cadastrar um novo aluguel caso já exista um em aberto para o mesmo usuário.
-Não deve ser possível cadastrar um novo aluguel caso já exista um em aberto para o mesmo carro.
-O usuário deve estar logado na aplicação
-Ao realizar um aluguel, o status do carro deverá ser alterado para indisponível.
-
-# Devolução de carro
-
-**RF**
-Deve ser possível realizar a devolução de um carro
-
-**RN**
-Se o carro for devolvido com menos de 24 horas, deverá ser cobrado diária completa.
-Ao realizar a devolução, o carro deverá ser liberado para outro aluguel.
-Ao realizar a devolução, o usuário deverá ser liberado para outro aluguel.
-Ao realizar a devolução, deverá ser calculado o total do aluguel.
-Caso o horário de devolução seja superior ao horário previsto de entrega, deverá ser cobrado multa proporcional aos dias de atraso.
-Caso haja multa deverá ser somado ao total do aluguel.
-O usuário deve estar logado na aplicação.
-
-# Listagem de alúgueis para usuário
-
-**RF**
-Deve ser possível realizar a busca de todos os alugueis para o usuário
-
-**RN**
-O usuário deve estar logado na aplicação
-
-# Recuperar senha
-
-**RF**
-Deve ser possível o usuário recuperar a senha informando o e-mail
-O usuário deve receber um e-mail com o passo a passo para a recuperação da senha
-O usuário deve conseguir inserir uma nova senha
-
-**RN** 
-O usuário precisa informar uma nova senha
-O link enviado para a recuperação deve expirar em 3 horas
+- Com um projeto criado no [Sentry](https://sentry.io/), copie o DSN para a variável no arquivo `.env`.
